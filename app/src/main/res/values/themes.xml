@@ -5,5 +5,12 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <!-- Splash Screen Theme -->
+    <style name="Theme.Academix.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_academix_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Academix</item>
+    </style>
+
     <style name="Theme.Academix" parent="Base.Theme.Academix" />
 </resources>
