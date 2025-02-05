@@ -96,6 +96,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public void deleteContact(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, KEY_USERNAME + " = ?", new String[]{username});
+        db.close();
+    }
+
 
     public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
