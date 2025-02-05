@@ -1,6 +1,8 @@
 package itbsgl.louayamor.academix.crud;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,11 @@ import java.util.List;
 
 import itbsgl.louayamor.academix.R;
 import itbsgl.louayamor.academix.model.Contact;
+import itbsgl.louayamor.academix.utils.DatabaseHelper;
 
 public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerContactAdapter.MyViewholder> {
 
+    DatabaseHelper dbHelper;
     Context con;
     List<Contact> data;
 
@@ -61,7 +65,23 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
             imgEdit = v.findViewById(R.id.imgEdit);
             imgDelete = v.findViewById(R.id.imgDelete);
 
+            imgCall.setOnClickListener(view -> {
 
+                //index of selected element
+                int index = getAdapterPosition();
+                Contact c = data.get(index);
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + c.getNum()));
+                con.startActivity(callIntent);
+            });
+
+            imgDelete.setOnClickListener(view -> {
+                int index = getAdapterPosition();
+                Contact c = data.get(index);
+                dbHelper.deleteContact(c.getUsername());
+                contactList.remove(position);
+                notifyDataSetChanged();
+            });
 
         }
     }
