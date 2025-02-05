@@ -13,7 +13,6 @@ public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Install the splash screen before calling super.onCreate()
         SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
 
         super.onCreate(savedInstanceState);
@@ -24,15 +23,13 @@ public class SplashActivity extends AppCompatActivity {
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         logo.startAnimation(fadeIn);
 
-        // Simulate a delay (e.g., loading data)
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // Start the main activity
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish(); // Close the splash activity
+                finish();
             }
-        }, 2000); // 2 seconds delay
+        }, 2000);
     }
 }

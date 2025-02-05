@@ -36,7 +36,6 @@ android:layout_height="wrap_content"
 android:layout_marginBottom="16dp"
 app:boxStrokeWidth="1dp"
 app:boxStrokeColor="@color/white"
-    app:boxCornerRadius="8dp"
     app:endIconMode="clear_text"
     app:endIconTint="@color/white">
 
@@ -57,7 +56,6 @@ android:layout_height="wrap_content"
 android:layout_marginBottom="24dp"
 app:boxStrokeWidth="1dp"
 app:boxStrokeColor="@color/white"
-    app:boxCornerRadius="8dp"
     app:endIconMode="password_toggle"
     app:endIconTint="@color/white">
 

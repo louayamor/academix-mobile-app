@@ -1,7 +1,8 @@
 package itbsgl.louayamor.academix;
 
+import android.content.Intent;
 import android.os.Bundle;
-
+import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -10,11 +11,29 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private TextView tvWelcome;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
+
+        // Initialize views
+        tvWelcome = findViewById(R.id.tvWelcome);
+
+        // Get the username from the intent
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("USERNAME");
+
+        // Display the welcome message with the username
+        if (username != null && !username.isEmpty()) {
+            tvWelcome.setText("Welcome, " + username + "!");
+        } else {
+            tvWelcome.setText("Welcome!");
+        }
+
+        // Handle edge-to-edge insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
