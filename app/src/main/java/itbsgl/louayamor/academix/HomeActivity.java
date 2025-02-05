@@ -10,7 +10,7 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 import itbsgl.louayamor.academix.crud.AddContactActivity;
-import itbsgl.louayamor.academix.crud.DisplayContacts;
+import itbsgl.louayamor.academix.crud.DisplayContactsActivity;
 import itbsgl.louayamor.academix.model.Contact;
 
 public class HomeActivity extends AppCompatActivity {
@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);*/
 
 
-                Intent intent =new Intent(HomeActivity.this, DisplayContacts.class);
+                Intent intent =new Intent(HomeActivity.this, DisplayContactsActivity.class);
                 startActivity(intent);
 
 

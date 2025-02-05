@@ -85,8 +85,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex(KEY_USERNAME));
-                @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(KEY_PHONENUMBER));
+                String username = cursor.getString(0);
+                String phone = cursor.getString(1);
                 contactList.add(new Contact(username, phone));
             } while (cursor.moveToNext());
         }
