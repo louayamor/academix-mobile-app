@@ -1,43 +1,56 @@
 package itbsgl.louayamor.academix;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import android.view.View;
+import android.widget.Button;
+
+import java.util.ArrayList;
+
+import itbsgl.louayamor.academix.crud.AddContactActivity;
+import itbsgl.louayamor.academix.crud.DisplayContacts;
+import itbsgl.louayamor.academix.model.Contact;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView tvWelcome;
+    public static  ArrayList<Contact> data = new ArrayList<Contact>();
+    Button btnAdd,btnDsiplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
+
         setContentView(R.layout.activity_home);
 
-        // Initialize views
-        tvWelcome = findViewById(R.id.tvWelcome);
+        btnAdd = findViewById(R.id.add_H);
+        btnDsiplay = findViewById(R.id.display_home);
 
-        // Get the username from the intent
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("USERNAME");
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent(HomeActivity.this, AddContactActivity.class);
+                startActivity(i);
+            }
+        });
 
-        // Display the welcome message with the username
-        if (username != null && !username.isEmpty()) {
-            tvWelcome.setText("Welcome, " + username + "!");
-        } else {
-            tvWelcome.setText("Welcome!");
-        }
+        btnDsiplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Intent i = new Intent();//action a lancer
+                i.setAction(Intent.ACTION_DIAL); //lancer la numerotation
+                i.setData(Uri.parse("tel:"+"12345678"));
+                startActivity(i);*/
 
-        // Handle edge-to-edge insets
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+                Intent intent =new Intent(HomeActivity.this, DisplayContacts.class);
+                startActivity(intent);
+
+
+
+            }
         });
     }
 }

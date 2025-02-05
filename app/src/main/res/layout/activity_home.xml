@@ -1,22 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    tools:context=".HomeActivity">
-
-    <!-- Welcome Message -->
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome!"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp" />
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:orientation="vertical" android:padding="10dp" tools:context=".HomeActivity">
+    <TextView android:id="@+id/textViewH" style="@style/style_title1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="32dp" android:text="Home"/>
+    <Button android:id="@+id/add_H" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginEnd="32dp" android:layout_marginStart="32dp" android:backgroundTint="#03A9F4" android:text="Add"/>
+    <Button android:id="@+id/display_home" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginEnd="32dp" android:layout_marginStart="32dp" android:backgroundTint="#03A9F4" android:text="Display"/>
 </LinearLayout>

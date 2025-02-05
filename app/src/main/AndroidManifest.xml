@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Academix"
         tools:targetApi="31">
         <activity
+            android:name=".crud.AddContactActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false" />
         <activity

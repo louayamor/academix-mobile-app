@@ -1,10 +1,16 @@
-package itbsgl.louayamor.academix;
+package itbsgl.louayamor.academix.utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import itbsgl.louayamor.academix.model.Contact;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -18,10 +24,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
 
+    private static final String TABLE_CONTACTS = "contacts";
+    private static final String KEY_PHONENUMBER= "phonenumber";
+
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_USERNAME + " TEXT,"
             + KEY_PASSWORD + " TEXT"
+            + ")";
+
+    private static final String CREATE_TABLE_CONTACTS = "CREATE TABLE " + TABLE_CONTACTS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + KEY_USERNAME + " TEXT,"
+            + KEY_PHONENUMBER + " TEXT"
             + ")";
 
     public DatabaseHelper(Context context) {
@@ -31,11 +46,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USERS);
+        db.execSQL(CREATE_TABLE_CONTACTS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
         onCreate(db);
     }
 
@@ -49,6 +66,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_USERS, null, values);
         db.close();
     }
+
+    public void addContact(String username, String phonenumber) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_USERNAME, username);
+        values.put(KEY_PHONENUMBER, phonenumber);
+
+        db.insert(TABLE_CONTACTS, null, values);
+        db.close();
+    }
+
+    public List<Contact> getAllContacts() {
+        List<Contact> contactList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_CONTACTS, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                @SuppressLint("Range") String username = cursor.getString(cursor.getColumnIndex(KEY_USERNAME));
+                @SuppressLint("Range") String phone = cursor.getString(cursor.getColumnIndex(KEY_PHONENUMBER));
+                contactList.add(new Contact(username, phone));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return contactList;
+    }
+
 
     public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();

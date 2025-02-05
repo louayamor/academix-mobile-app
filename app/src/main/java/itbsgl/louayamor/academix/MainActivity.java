@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import itbsgl.louayamor.academix.utils.DatabaseHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText edName, edPassword;
