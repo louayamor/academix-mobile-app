@@ -57,6 +57,7 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
         TextView txtUsername, txtPhone;
         ImageView imgCall, imgEdit, imgDelete;
 
+
         public MyViewholder(@NonNull View v) {
             super(v);
             txtUsername = v.findViewById(R.id.tvUsername);
@@ -77,11 +78,15 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
 
             imgDelete.setOnClickListener(view -> {
                 int index = getAdapterPosition();
-                Contact c = data.get(index);
-                dbHelper.deleteContact(c.getUsername());
-                contactList.remove(position);
-                notifyDataSetChanged();
+                if (index != RecyclerView.NO_POSITION) {
+                    Contact c = data.get(index);
+                    dbHelper.deleteContact(c.getUsername());
+                    data.remove(index);
+                    notifyItemRemoved(index);
+                    notifyItemRangeChanged(index, data.size());
+                }
             });
+
 
         }
     }
