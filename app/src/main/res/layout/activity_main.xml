@@ -3,95 +3,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
     android:orientation="vertical"
     android:padding="24dp"
+    android:gravity="center"
     tools:context=".MainActivity">
 
-<ImageView
-android:id="@+id/logo"
-android:layout_width="120dp"
-android:layout_height="120dp"
-android:layout_gravity="center_horizontal"
-android:layout_marginTop="32dp"
-android:layout_marginBottom="32dp"
-android:src="@drawable/ic_academix_logo" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/ic_academix_logo" />
 
-<TextView
-android:id="@+id/textView"
-style="@style/style_title1"
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:layout_gravity="center_horizontal"
-android:layout_marginBottom="24dp"
-android:text="@string/title_1"
-android:textColor="@color/white"
-    android:textSize="24sp"
-    android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="@string/title_1"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
-<com.google.android.material.textfield.TextInputLayout
-android:id="@+id/usernameLayout"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginBottom="16dp"
-app:boxStrokeWidth="1dp"
-app:boxStrokeColor="@color/white"
-    app:endIconMode="clear_text"
-    app:endIconTint="@color/white">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/usernameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeColor="@color/white"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/white">
 
-<com.google.android.material.textfield.TextInputEditText
-android:id="@+id/edname_auth"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Username"
-android:inputType="text"
-android:textColor="@color/white"
-    android:textSize="16sp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edname_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-<com.google.android.material.textfield.TextInputLayout
-android:id="@+id/passwordLayout"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginBottom="24dp"
-app:boxStrokeWidth="1dp"
-app:boxStrokeColor="@color/white"
-    app:endIconMode="password_toggle"
-    app:endIconTint="@color/white">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:boxStrokeWidth="1dp"
+        app:boxStrokeColor="@color/white"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/white">
 
-<com.google.android.material.textfield.TextInputEditText
-android:id="@+id/edpasswd_auth"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:hint="Password"
-android:inputType="textPassword"
-android:textColor="@color/white"
-    android:textSize="16sp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edpasswd_auth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-<Button
-android:id="@+id/btnlogin_auth"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_marginBottom="16dp"
-android:backgroundTint="@color/white"
-    android:text="Login"
-    android:textColor="@color/primary_color"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    android:elevation="4dp"
-    android:stateListAnimator="@null" />
+    <Button
+        android:id="@+id/btnlogin_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/white"
+        android:text="Login"
+        android:textColor="@color/primary_color"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:elevation="4dp"
+        android:stateListAnimator="@null" />
 
-<Button
-android:id="@+id/btnexit_auth"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:backgroundTint="@color/white"
-    android:text="Exit"
-    android:textColor="@color/red"
-    android:textSize="18sp"
-    android:textStyle="bold"
-    android:elevation="4dp"
-    android:stateListAnimator="@null" />
+    <Button
+        android:id="@+id/btnexit_auth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:text="Exit"
+        android:textColor="@color/error_color"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:elevation="4dp"
+        android:stateListAnimator="@null" />
 
-    </LinearLayout>
+    
+
+</LinearLayout>

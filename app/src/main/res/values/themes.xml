@@ -1,16 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+
+    <!-- Base application theme -->
     <style name="Base.Theme.Academix" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary_color</item> <!-- Primary color for your app -->
+        <item name="colorPrimaryVariant">@color/primary_color</item> <!-- Primary color variant -->
+        <item name="colorOnPrimary">@color/white</item> <!-- Text/icons on primary -->
+        <item name="colorSecondary">@color/primary_color</item> <!-- Secondary color -->
+        <item name="colorOnSecondary">@color/white</item> <!-- Text/icons on secondary -->
+        <item name="colorSurface">@color/white</item> <!-- Surface color -->
+        <item name="colorOnSurface">@color/black</item> <!-- Text/icons on surface -->
+        <item name="colorError">@color/error_color</item> <!-- Error color -->
+        <item name="colorOnError">@color/white</item> <!-- Text/icons on error -->
+        <item name="android:statusBarColor">@color/primary_color</item> <!-- Status bar color -->
+        <item name="android:navigationBarColor">@color/primary_color</item> <!-- Navigation bar color -->
+        <item name="android:windowBackground">@color/white</item> <!-- Window background color -->
+        <item name="android:windowLightStatusBar">true</item> <!-- Light status bar icons -->
     </style>
 
     <!-- Splash Screen Theme -->
     <style name="Theme.Academix.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/splash_background</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_academix_logo</item>
+        <item name="windowSplashScreenBackground">@color/primary_color</item> <!-- Splash screen background -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_academix_logo</item> <!-- Splash logo -->
         <item name="postSplashScreenTheme">@style/Theme.Academix</item>
     </style>
 
+    <!-- Default theme for the app -->
     <style name="Theme.Academix" parent="Base.Theme.Academix" />
+
 </resources>
