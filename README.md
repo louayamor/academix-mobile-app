@@ -1,7 +1,5 @@
 # Academix-Mobile-App
 
-## Academix - Starter Contact (V1.0)
-
 Academix is a simple and intuitive Android application designed to manage contacts. This starter version (V1.0) provides basic functionalities for adding, viewing, and deleting contacts. It’s built using **Java** and **SQLite** for local data storage.
 
 ---
@@ -22,11 +20,6 @@ Academix is a simple and intuitive Android application designed to manage contac
 - **Database**: SQLite
 - **UI Framework**: Android XML Layouts
 
-### Dependencies:
-
-- [Material Components for Android](https://material.io/develop/android/docs/getting-started)
-- [RecyclerView](https://developer.android.com/guide/topics/ui/layout/recyclerview) for displaying contacts
-
 ---
 
 ## Screenshots 📸
@@ -37,22 +30,12 @@ Academix is a simple and intuitive Android application designed to manage contac
 
 ---
 
-## Getting Started 🏁
-
-Follow these steps to set up and run the project on your local machine.
-
-### Prerequisites ✅
-
-- [Android Studio](https://developer.android.com/studio) (latest version recommended)
-- [Android SDK](https://developer.android.com/studio)
-- [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-
 ### Installation 📥
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/Academix.git
+   git clone https://github.com/louayamor/academix-mobile-app.git
    ```
 
 2. Open the project in **Android Studio**.
