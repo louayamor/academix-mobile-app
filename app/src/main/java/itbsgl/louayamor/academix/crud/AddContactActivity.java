@@ -37,7 +37,8 @@ public class AddContactActivity extends AppCompatActivity {
                 if (username.isEmpty() || num.isEmpty()) {
                     Toast.makeText(AddContactActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
-                    dbHelper.addContact(username, num);
+                    Contact contact = new Contact(username, num); // Create Contact object
+                    dbHelper.addContact(contact);
                     Toast.makeText(AddContactActivity.this, "Contact added successfully!", Toast.LENGTH_SHORT).show();
 
                     edusername.setText("");

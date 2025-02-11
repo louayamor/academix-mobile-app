@@ -67,16 +67,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addContact(String username, String phonenumber) {
+    public void addContact(Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME, username);
-        values.put(KEY_PHONENUMBER, phonenumber);
 
-        db.insert(TABLE_CONTACTS, null, values);
+        values.put(KEY_USERNAME, contact.getUsername());
+        values.put(KEY_PHONENUMBER, contact.getNum());
+
+        long id = db.insert(TABLE_CONTACTS, null, values);
+        contact.setId((int) id);
+
         db.close();
     }
+
 
     public List<Contact> getAllContacts() {
         List<Contact> contactList = new ArrayList<>();
@@ -101,6 +104,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_CONTACTS, KEY_USERNAME + " = ?", new String[]{username});
         db.close();
     }
+
+    public void updateContact(int id, String newUsername, String newPhone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_USERNAME, newUsername);
+        values.put(KEY_PHONENUMBER, newPhone);
+
+        // Updating row
+        db.update(TABLE_CONTACTS, values, KEY_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
 
 
     public boolean checkUser(String username, String password) {

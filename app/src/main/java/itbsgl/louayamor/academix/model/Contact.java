@@ -1,13 +1,28 @@
 package itbsgl.louayamor.academix.model;
 
 public class Contact {
+    private int id;
+    private String username;
+    private String num;
 
-    public String getNum() {
-        return num;
+    // Constructors
+    public Contact(int id, String username, String num) {
+        this.id = id;
+        this.username = username;
+        this.num = num;
     }
 
-    public void setNum(String num) {
+    public Contact(String username, String num) {
+        this.username = username;
         this.num = num;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -18,18 +33,21 @@ public class Contact {
         this.username = username;
     }
 
-    String username, num ;
+    public String getNum() {
+        return num;
+    }
 
-    public Contact(String username, String num) {
-        this.username = username;
+    public void setNum(String num) {
         this.num = num;
     }
 
+    // ToString method
     @Override
     public String toString() {
         return "Contact{" +
-                "nom='" + username + '\'' +
-                ", numero='" + num + '\'' +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", num='" + num + '\'' +
                 '}';
     }
 }

@@ -6,10 +6,13 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -87,7 +90,50 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
                 }
             });
 
+            imgEdit.setOnClickListener(view -> {
+                int index = getAdapterPosition();
+                if (index != RecyclerView.NO_POSITION) {
+                    Contact c = data.get(index);
+                    showEditDialog(c, index);
+                }
+            });
 
         }
+
+        private void showEditDialog(Contact contact, int index) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(con);
+            builder.setTitle("Edit Contact");
+
+            LayoutInflater inflater = LayoutInflater.from(con);
+            View dialogView = inflater.inflate(R.layout.activity_edit_contact, null);
+            builder.setView(dialogView);
+
+            EditText edUsername = dialogView.findViewById(R.id.edUsername);
+            EditText edPhone = dialogView.findViewById(R.id.edPhone);
+
+            edUsername.setText(contact.getUsername());
+            edPhone.setText(contact.getNum());
+
+            builder.setPositiveButton("Save", (dialog, which) -> {
+                String newUsername = edUsername.getText().toString();
+                String newPhone = edPhone.getText().toString();
+
+                if (!newUsername.isEmpty() && !newPhone.isEmpty()) {
+                    dbHelper.updateContact(contact.getId(), newUsername, newPhone);
+
+                    contact.setUsername(newUsername);
+                    contact.setNum(newPhone);
+                    data.set(index, contact);
+                    notifyItemChanged(index);
+                    Toast.makeText(con, "Contact updated!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(con, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            builder.setNegativeButton("Cancel", null);
+            builder.show();
+        }
+
     }
 }
