@@ -25,16 +25,36 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
+    <!-- SearchView -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/btn_sort_contacts"
         android:layout_marginBottom="16dp"
+        android:layout_weight="1"
         android:iconifiedByDefault="false"
         android:background="@color/light_gray"
         android:queryHint="Search Contacts"/>
 
+    <!-- Sort Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sort_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="Sort"
+        app:icon="@drawable/ic_sort"
+        app:iconGravity="start"
+        app:backgroundTint="@color/primary_color"
+        android:textColor="@color/white"/>
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvContacts"
         android:layout_width="match_parent"
@@ -44,6 +64,7 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10dp"/>
 
+    <!-- Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_contact"
         android:layout_width="wrap_content"

@@ -2,6 +2,7 @@ package itbsgl.louayamor.academix.crud;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,7 +20,9 @@ public class DisplayContactsActivity extends AppCompatActivity {
     List<Contact> contactList;
     MyRecyclerContactAdapter adapter;
     FloatingActionButton btnAddContact;
-    SearchView edtSearch;  // SearchView instead of EditText
+    SearchView edtSearch;
+    Button btnSortContacts; // Sort button
+    boolean isSortedByDate = false; // Toggle state
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +32,10 @@ public class DisplayContactsActivity extends AppCompatActivity {
         rv = findViewById(R.id.rvContacts);
         btnAddContact = findViewById(R.id.btn_add_contact);
         edtSearch = findViewById(R.id.searchView);
+        btnSortContacts = findViewById(R.id.btn_sort_contacts); // Initialize sort button
         dbHelper = new DatabaseHelper(this);
 
         contactList = dbHelper.getAllContacts();
-
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
 
@@ -50,7 +53,6 @@ public class DisplayContactsActivity extends AppCompatActivity {
         edtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // Handle search submit if needed
                 return false;
             }
 
@@ -61,6 +63,21 @@ public class DisplayContactsActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        // Handle sorting when sort button is clicked
+        btnSortContacts.setOnClickListener(v -> toggleSortByDate());
+    }
+
+    private void toggleSortByDate() {
+        if (isSortedByDate) {
+            contactList = dbHelper.getAllContacts();  // Load unsorted contacts
+            isSortedByDate = false;
+        } else {
+            contactList = dbHelper.getAllContactsSortedByDate();  // Load sorted contacts
+            isSortedByDate = true;
+        }
+
+        adapter.updateData(contactList);
     }
 
     @Override

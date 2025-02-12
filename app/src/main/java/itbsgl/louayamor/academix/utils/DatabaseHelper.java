@@ -1,6 +1,5 @@
 package itbsgl.louayamor.academix.utils;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,19 +13,16 @@ import itbsgl.louayamor.academix.model.Contact;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
-
+    private static final int DATABASE_VERSION = 4; // Incremented to trigger upgrade
     private static final String DATABASE_NAME = "AcademixDB";
 
     private static final String TABLE_USERS = "users";
-
     private static final String KEY_ID = "id";
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
 
-
     private static final String TABLE_CONTACTS = "contacts";
-    private static final String KEY_PHONENUMBER= "phonenumber";
+    private static final String KEY_PHONENUMBER = "phonenumber";
     private static final String KEY_TIMESTAMP = "timestamp";
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
@@ -35,12 +31,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_PASSWORD + " TEXT"
             + ")";
 
-    private static final String CREATE_TABLE_CONTACTS =
-            "CREATE TABLE " + TABLE_CONTACTS + "("
-                    + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + KEY_USERNAME + " TEXT, "
-                    + KEY_PHONENUMBER + " TEXT, "
-                    + KEY_TIMESTAMP + " TEXT DEFAULT CURRENT_TIMESTAMP)";
+    private static final String CREATE_TABLE_CONTACTS = "CREATE TABLE " + TABLE_CONTACTS + "("
+            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + KEY_USERNAME + " TEXT, "
+            + KEY_PHONENUMBER + " TEXT, "
+            + KEY_TIMESTAMP + " TIMESTAMP DEFAULT ( datetime ('now' ,'localtime')))";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -59,6 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+
     public void addUser(String username, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -76,14 +72,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(KEY_USERNAME, contact.getUsername());
         values.put(KEY_PHONENUMBER, contact.getNum());
-        values.put(KEY_TIMESTAMP, contact.getTimestamp());
+        values.put(KEY_TIMESTAMP, System.currentTimeMillis()); // Ensure a valid timestamp is added
 
         long id = db.insert(TABLE_CONTACTS, null, values);
         contact.setId((int) id);
 
         db.close();
     }
-
 
     public List<Contact> getAllContacts() {
         List<Contact> contactList = new ArrayList<>();
@@ -116,7 +111,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_USERNAME, newUsername);
         values.put(KEY_PHONENUMBER, newPhone);
 
-        // Updating row
         db.update(TABLE_CONTACTS, values, KEY_ID + " = ?", new String[]{String.valueOf(id)});
         db.close();
     }
@@ -149,11 +143,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contactList;
     }
 
+    public List<Contact> getAllContactsSortedByDate() {
+        List<Contact> contactList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + TABLE_CONTACTS + " ORDER BY " + KEY_TIMESTAMP + " DESC";
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int idIndex = cursor.getColumnIndex(KEY_ID);
+                int usernameIndex = cursor.getColumnIndex(KEY_USERNAME);
+                int phoneIndex = cursor.getColumnIndex(KEY_PHONENUMBER);
+                int timestampIndex = cursor.getColumnIndex(KEY_TIMESTAMP);
+
+                if (usernameIndex >= 0 && phoneIndex >= 0 && timestampIndex >= 0) {
+                    int id = cursor.getInt(idIndex);
+                    String username = cursor.getString(usernameIndex);
+                    String phone = cursor.getString(phoneIndex);
+                    String timestamp = cursor.getString(timestampIndex);
+                    contactList.add(new Contact(id, username, phone, timestamp));
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return contactList;
+    }
 
 
     public void clearContacts() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM contacts"); // Replace "contacts" with your table name
+        db.execSQL("DELETE FROM contacts");
         db.close();
     }
 
@@ -161,14 +184,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
         try {
-            for (int i = 1; i <= 30; i++) {
-                String username = "User" + i;
+            for (int i = 1; i <= 15; i++) {
+                String username = "Louay" + i;
                 String phone = "+12345678" + String.format("%02d", i);
                 ContentValues values = new ContentValues();
-                values.put("username", username);
-                values.put("phonenumber", phone);
-                db.insert("contacts", null, values);
+                values.put(KEY_USERNAME, username);
+                values.put(KEY_PHONENUMBER, phone);
+                db.insert(TABLE_CONTACTS, null, values);
             }
+
+            for (int i = 1; i <= 15; i++) {
+                String username = "Amor" + i;
+                String phone = "+98765432" + String.format("%02d", i);
+                ContentValues values = new ContentValues();
+                values.put(KEY_USERNAME, username);
+                values.put(KEY_PHONENUMBER, phone);
+                db.insert(TABLE_CONTACTS, null, values);
+            }
+
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();

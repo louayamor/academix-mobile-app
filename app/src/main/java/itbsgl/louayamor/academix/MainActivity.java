@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
 
         //dbHelper.clearContacts();
+        dbHelper.insertRandomContacts();
 
         //dbHelper.addUser("louay", "louay");
         //dbHelper.addUser("louai", "louai");
