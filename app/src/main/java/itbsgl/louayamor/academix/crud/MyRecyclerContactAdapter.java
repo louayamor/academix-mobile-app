@@ -1,5 +1,7 @@
 package itbsgl.louayamor.academix.crud;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -58,7 +60,7 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
     public class MyViewholder extends RecyclerView.ViewHolder {
 
         TextView txtUsername, txtPhone;
-        ImageView imgCall, imgEdit, imgDelete;
+        ImageView imgCall, imgEdit, imgDelete, btnAddContact;
 
 
         public MyViewholder(@NonNull View v) {
@@ -69,9 +71,10 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
             imgEdit = v.findViewById(R.id.imgEdit);
             imgDelete = v.findViewById(R.id.imgDelete);
 
+
+
             imgCall.setOnClickListener(view -> {
 
-                //index of selected element
                 int index = getAdapterPosition();
                 Contact c = data.get(index);
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);

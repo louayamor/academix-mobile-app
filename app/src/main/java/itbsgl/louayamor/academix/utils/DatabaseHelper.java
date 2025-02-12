@@ -24,8 +24,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_USERNAME = "username";
     private static final String KEY_PASSWORD = "password";
 
+
     private static final String TABLE_CONTACTS = "contacts";
     private static final String KEY_PHONENUMBER= "phonenumber";
+    private static final String KEY_TIMESTAMP = "timestamp";
 
     private static final String CREATE_TABLE_USERS = "CREATE TABLE " + TABLE_USERS + "("
             + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -33,11 +35,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_PASSWORD + " TEXT"
             + ")";
 
-    private static final String CREATE_TABLE_CONTACTS = "CREATE TABLE " + TABLE_CONTACTS + "("
-            + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + KEY_USERNAME + " TEXT,"
-            + KEY_PHONENUMBER + " TEXT"
-            + ")";
+    private static final String CREATE_TABLE_CONTACTS =
+            "CREATE TABLE " + TABLE_CONTACTS + "("
+                    + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + KEY_USERNAME + " TEXT, "
+                    + KEY_PHONENUMBER + " TEXT, "
+                    + KEY_TIMESTAMP + " TEXT DEFAULT CURRENT_TIMESTAMP)";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -73,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         values.put(KEY_USERNAME, contact.getUsername());
         values.put(KEY_PHONENUMBER, contact.getNum());
+        values.put(KEY_TIMESTAMP, contact.getTimestamp());
 
         long id = db.insert(TABLE_CONTACTS, null, values);
         contact.setId((int) id);
@@ -88,8 +92,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                String username = cursor.getString(0);
-                String phone = cursor.getString(1);
+                String username = cursor.getString(1);
+                String phone = cursor.getString(2);
                 contactList.add(new Contact(username, phone));
             } while (cursor.moveToNext());
         }
@@ -117,6 +121,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void clearContacts() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM contacts"); // Replace "contacts" with your table name
+        db.close();
+    }
+
+    public void insertRandomContacts() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            for (int i = 1; i <= 30; i++) {
+                String username = "User" + i;
+                String phone = "+12345678" + String.format("%02d", i);
+                ContentValues values = new ContentValues();
+                values.put("username", username);
+                values.put("phonenumber", phone);
+                db.insert("contacts", null, values);
+            }
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            db.close();
+        }
+    }
 
 
     public boolean checkUser(String username, String password) {

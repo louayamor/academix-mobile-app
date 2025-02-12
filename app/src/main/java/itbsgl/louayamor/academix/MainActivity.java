@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
 
-        dbHelper.addUser("louay", "louay");
-        dbHelper.addUser("louai", "louai");
-        dbHelper.addUser("louey", "louey");
-        dbHelper.addUser("louei", "louei");
-        dbHelper.addUser("lou", "lou");
-        dbHelper.addUser("amor", "amor");
+        //dbHelper.clearContacts();
+
+        //dbHelper.addUser("louay", "louay");
+        //dbHelper.addUser("louai", "louai");
+        //dbHelper.addUser("louey", "louey");
+        //dbHelper.addUser("louei", "louei");
+        //dbHelper.addUser("lou", "lou");
+        //dbHelper.addUser("amor", "amor");
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
