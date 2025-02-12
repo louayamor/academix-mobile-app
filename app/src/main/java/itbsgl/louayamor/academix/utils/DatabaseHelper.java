@@ -121,6 +121,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<Contact> searchContacts(String query) {
+        List<Contact> contactList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String searchQuery = "SELECT * FROM " + TABLE_CONTACTS + " WHERE "
+                + KEY_USERNAME + " LIKE ? OR "
+                + KEY_PHONENUMBER + " LIKE ?";
+
+        Cursor cursor = db.rawQuery(searchQuery, new String[]{"%" + query + "%", "%" + query + "%"});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int usernameIndex = cursor.getColumnIndex(KEY_USERNAME);
+                int phoneIndex = cursor.getColumnIndex(KEY_PHONENUMBER);
+
+                if (usernameIndex >= 0 && phoneIndex >= 0) {
+                    String username = cursor.getString(usernameIndex);
+                    String phone = cursor.getString(phoneIndex);
+                    contactList.add(new Contact(username, phone));
+                }
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return contactList;
+    }
+
+
+
     public void clearContacts() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM contacts"); // Replace "contacts" with your table name

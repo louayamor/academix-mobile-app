@@ -33,23 +33,22 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
     public MyRecyclerContactAdapter(Context con, List<Contact> data) {
         this.con = con;
         this.data = data;
+        this.dbHelper = new DatabaseHelper(con);  // Ensure dbHelper is initialized
     }
 
     @NonNull
     @Override
     public MyRecyclerContactAdapter.MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inf=LayoutInflater.from(con);
-        View v = inf.inflate(R.layout.contact_list_item,  null);
+        LayoutInflater inf = LayoutInflater.from(con);
+        View v = inf.inflate(R.layout.contact_list_item, null);
         return new MyViewholder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyRecyclerContactAdapter.MyViewholder holder, int position) {
-
         Contact c = data.get(position);
         holder.txtUsername.setText(c.getUsername());
         holder.txtPhone.setText(c.getNum());
-
     }
 
     @Override
@@ -57,11 +56,15 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
         return data.size();
     }
 
+    public void updateData(List<Contact> newContactList) {
+        this.data = newContactList;
+        notifyDataSetChanged();
+    }
+
     public class MyViewholder extends RecyclerView.ViewHolder {
 
         TextView txtUsername, txtPhone;
-        ImageView imgCall, imgEdit, imgDelete, btnAddContact;
-
+        ImageView imgCall, imgEdit, imgDelete;
 
         public MyViewholder(@NonNull View v) {
             super(v);
@@ -71,10 +74,7 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
             imgEdit = v.findViewById(R.id.imgEdit);
             imgDelete = v.findViewById(R.id.imgDelete);
 
-
-
             imgCall.setOnClickListener(view -> {
-
                 int index = getAdapterPosition();
                 Contact c = data.get(index);
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
@@ -100,7 +100,6 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
                     showEditDialog(c, index);
                 }
             });
-
         }
 
         private void showEditDialog(Contact contact, int index) {
@@ -123,7 +122,6 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
 
                 if (!newUsername.isEmpty() && !newPhone.isEmpty()) {
                     dbHelper.updateContact(contact.getId(), newUsername, newPhone);
-
                     contact.setUsername(newUsername);
                     contact.setNum(newPhone);
                     data.set(index, contact);
@@ -137,6 +135,6 @@ public class MyRecyclerContactAdapter extends RecyclerView.Adapter<MyRecyclerCon
             builder.setNegativeButton("Cancel", null);
             builder.show();
         }
-
     }
 }
+

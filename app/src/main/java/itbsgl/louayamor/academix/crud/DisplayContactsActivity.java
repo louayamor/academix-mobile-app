@@ -2,16 +2,12 @@ package itbsgl.louayamor.academix.crud;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.List;
-
 import itbsgl.louayamor.academix.R;
 import itbsgl.louayamor.academix.model.Contact;
 import itbsgl.louayamor.academix.utils.DatabaseHelper;
@@ -23,6 +19,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
     List<Contact> contactList;
     MyRecyclerContactAdapter adapter;
     FloatingActionButton btnAddContact;
+    SearchView edtSearch;  // SearchView instead of EditText
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +28,11 @@ public class DisplayContactsActivity extends AppCompatActivity {
 
         rv = findViewById(R.id.rvContacts);
         btnAddContact = findViewById(R.id.btn_add_contact);
+        edtSearch = findViewById(R.id.searchView);
         dbHelper = new DatabaseHelper(this);
 
-        // Fetch contacts from database
         contactList = dbHelper.getAllContacts();
 
-        // Set up RecyclerView with LinearLayoutManager
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rv.setLayoutManager(manager);
 
@@ -45,12 +41,32 @@ public class DisplayContactsActivity extends AppCompatActivity {
         rv.setAdapter(adapter);
 
         // Handle Add Contact button click
-        btnAddContact.setOnClickListener(new View.OnClickListener() {
+        btnAddContact.setOnClickListener(v -> {
+            Intent intent = new Intent(DisplayContactsActivity.this, AddContactActivity.class);
+            startActivity(intent);
+        });
+
+        // Handle Search functionality with SearchView
+        edtSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DisplayContactsActivity.this, AddContactActivity.class);
-                startActivity(intent);
+            public boolean onQueryTextSubmit(String query) {
+                // Handle search submit if needed
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                List<Contact> filteredContacts = dbHelper.searchContacts(newText);
+                adapter.updateData(filteredContacts);
+                return true;
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        contactList = dbHelper.getAllContacts();
+        adapter.updateData(contactList);
     }
 }
